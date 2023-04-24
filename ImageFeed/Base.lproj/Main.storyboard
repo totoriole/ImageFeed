@@ -38,7 +38,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbS-3h-N6G" userLabel="LikeOnButton">
-                                                    <rect key="frame" x="369" y="4" width="29" height="26"/>
+                                                    <rect key="frame" x="358" y="17" width="29" height="26"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="LikeOnButton"/>
@@ -52,18 +52,23 @@
                                             </subviews>
                                             <color key="backgroundColor" name="YP Black"/>
                                             <constraints>
-                                                <constraint firstItem="zbS-3h-N6G" firstAttribute="trailing" secondItem="fnK-4D-6in" secondAttribute="trailing" id="IL4-HX-hX6"/>
+                                                <constraint firstItem="zbS-3h-N6G" firstAttribute="trailing" secondItem="fnK-4D-6in" secondAttribute="trailing" constant="-11" id="IL4-HX-hX6"/>
                                                 <constraint firstItem="MR6-rF-oVx" firstAttribute="leading" secondItem="fnK-4D-6in" secondAttribute="leading" constant="8" id="Kb4-xf-QBW"/>
                                                 <constraint firstItem="MR6-rF-oVx" firstAttribute="bottom" secondItem="fnK-4D-6in" secondAttribute="bottom" constant="-8" id="WyM-Ud-0Du"/>
                                                 <constraint firstAttribute="bottom" secondItem="fnK-4D-6in" secondAttribute="bottom" constant="4" id="ZNj-tp-p1C"/>
                                                 <constraint firstAttribute="trailing" secondItem="fnK-4D-6in" secondAttribute="trailing" constant="16" id="eBD-OQ-ml2"/>
-                                                <constraint firstItem="zbS-3h-N6G" firstAttribute="top" secondItem="fnK-4D-6in" secondAttribute="top" id="fva-47-PET"/>
+                                                <constraint firstItem="zbS-3h-N6G" firstAttribute="top" secondItem="fnK-4D-6in" secondAttribute="top" constant="13" id="fva-47-PET"/>
                                                 <constraint firstItem="fnK-4D-6in" firstAttribute="leading" secondItem="qfY-GH-Ss4" secondAttribute="leading" constant="16" id="gXb-DK-l5S"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MR6-rF-oVx" secondAttribute="trailing" constant="20" symbolic="YES" id="tJc-bF-yOo"/>
                                                 <constraint firstItem="fnK-4D-6in" firstAttribute="top" secondItem="qfY-GH-Ss4" secondAttribute="top" constant="4" id="wLI-4d-VSK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="YP Black"/>
+                                        <connections>
+                                            <outlet property="dateLabel" destination="MR6-rF-oVx" id="hXX-2o-WdH"/>
+                                            <outlet property="imageCell" destination="fnK-4D-6in" id="Jp2-Dn-BDt"/>
+                                            <outlet property="likeButton" destination="zbS-3h-N6G" id="ldo-ug-qsT"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
