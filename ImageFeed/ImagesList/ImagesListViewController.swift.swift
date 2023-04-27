@@ -9,28 +9,19 @@ import UIKit
 
 class ImagesListViewController: UIViewController {
 
-    @IBOutlet private var tableView: UITableView!
-    
-    private let photosName: [String] = Array(0..<20).map{"\($0)"}
+    private var listCell = ImagesListCell()
+    @IBOutlet weak private var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    } ()
 }
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return listCell.photosName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -39,23 +30,8 @@ extension ImagesListViewController: UITableViewDataSource {
             print("Ошибка приведения типов")
             return UITableViewCell()
         }
-        configCell(for: imageListCell, with: indexPath)
+        listCell.configCell(for: imageListCell, with: indexPath)
         return imageListCell
-    }
-}
-
-extension ImagesListViewController {
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return
-        }
-        
-        cell.imageCell.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date())
-        
-        let likeState = indexPath.row % 2 == 0
-        let likeImage = likeState ? UIImage(named: "LikeOffButton") : UIImage(named: "LikeOnButton")
-        cell.likeButton.setImage(likeImage, for: .normal)
     }
 }
 
@@ -64,7 +40,7 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
+        guard let image = UIImage(named: listCell.photosName[indexPath.row]) else {
             return 0
         }
         
