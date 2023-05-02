@@ -89,7 +89,7 @@
                     <navigationItem key="navigationItem" id="IRQ-GW-BBe"/>
                     <connections>
                         <outlet property="tableView" destination="Mnm-Q5-lJ7" id="J5l-cw-e8W"/>
-                        <segue destination="szl-MF-dfh" kind="show" identifier="ShowSingleImage" id="eAu-Tf-uMe"/>
+                        <segue destination="szl-MF-dfh" kind="presentation" identifier="ShowSingleImage" id="eAu-Tf-uMe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -99,23 +99,39 @@
         <!--Single Image View Controller-->
         <scene sceneID="WAM-cQ-JBw">
             <objects>
-                <viewController id="szl-MF-dfh" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="szl-MF-dfh" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="636-SD-ebN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="F5i-3d-wdf">
-                                <rect key="frame" x="0.0" y="92" width="414" height="721"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" name="TabBarBackgroundColor"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="thu-Qe-Pu2" userLabel="BackwardButton">
+                                <rect key="frame" x="8" y="56" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="Waq-BF-BU9"/>
+                                    <constraint firstAttribute="width" constant="48" id="Znt-hK-Kxx"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="backwardButton">
+                                    <color key="titleColor" name="YP White"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapBackButton" destination="szl-MF-dfh" eventType="touchUpInside" id="h8r-PB-Wi5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WC1-sO-XQ9"/>
                         <color key="backgroundColor" name="TabBarBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="F5i-3d-wdf" firstAttribute="leading" secondItem="WC1-sO-XQ9" secondAttribute="leading" id="3Nq-oO-bgY"/>
-                            <constraint firstItem="WC1-sO-XQ9" firstAttribute="trailing" secondItem="F5i-3d-wdf" secondAttribute="trailing" id="BQQ-4b-c3T"/>
-                            <constraint firstItem="WC1-sO-XQ9" firstAttribute="bottom" secondItem="F5i-3d-wdf" secondAttribute="bottom" id="Gw1-N5-BLc"/>
-                            <constraint firstItem="F5i-3d-wdf" firstAttribute="top" secondItem="WC1-sO-XQ9" secondAttribute="top" id="Piw-JO-Nc1"/>
+                            <constraint firstItem="F5i-3d-wdf" firstAttribute="leading" secondItem="636-SD-ebN" secondAttribute="leading" id="3Nq-oO-bgY"/>
+                            <constraint firstItem="thu-Qe-Pu2" firstAttribute="top" secondItem="WC1-sO-XQ9" secondAttribute="top" constant="8" id="8U0-w4-wZh"/>
+                            <constraint firstAttribute="trailing" secondItem="F5i-3d-wdf" secondAttribute="trailing" id="BQQ-4b-c3T"/>
+                            <constraint firstAttribute="bottom" secondItem="F5i-3d-wdf" secondAttribute="bottom" id="Gw1-N5-BLc"/>
+                            <constraint firstItem="F5i-3d-wdf" firstAttribute="top" secondItem="636-SD-ebN" secondAttribute="top" id="Piw-JO-Nc1"/>
+                            <constraint firstItem="thu-Qe-Pu2" firstAttribute="leading" secondItem="WC1-sO-XQ9" secondAttribute="leading" constant="8" id="RWX-BO-BYF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4Aq-Lz-Ace"/>
@@ -125,7 +141,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vj1-0I-gy8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2462" y="-429"/>
+            <point key="canvasLocation" x="2460.8695652173915" y="-429.24107142857139"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="res-Q6-M1Y">
@@ -248,6 +264,7 @@
         <image name="0" width="200" height="132"/>
         <image name="LikeOnButton" width="29" height="26"/>
         <image name="PhotoProfile" width="70" height="70"/>
+        <image name="backwardButton" width="9" height="16"/>
         <image name="ipad.and.arrow.forward" width="20" height="22"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="24" height="24"/>
