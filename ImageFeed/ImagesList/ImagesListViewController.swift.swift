@@ -9,8 +9,8 @@ import UIKit
 
 class ImagesListViewController: UIViewController {
 
-    private var listCell = ImagesListCell()
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
+    let photosName: [String] = Array(0..<20).map{"\($0)"}
     
     @IBOutlet weak private var tableView: UITableView!
     
@@ -23,7 +23,7 @@ class ImagesListViewController: UIViewController {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: listCell.photosName[indexPath.row])
+            let image = UIImage(named: photosName[indexPath.row])
             viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
@@ -33,7 +33,7 @@ class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listCell.photosName.count
+        return photosName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -42,7 +42,7 @@ extension ImagesListViewController: UITableViewDataSource {
             print("Ошибка приведения типов")
             return UITableViewCell()
         }
-        listCell.configCell(for: imageListCell, with: indexPath)
+        imageListCell.configCell(for: imageListCell, with: indexPath, imageNamed: UIImage(named: photosName[indexPath.row]))
         return imageListCell
     }
 }
@@ -53,7 +53,7 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: listCell.photosName[indexPath.row]) else {
+        guard let image = UIImage(named: photosName[indexPath.row]) else {
             return 0
         }
         

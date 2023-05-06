@@ -17,12 +17,12 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor(named: "YP Black")
-        presentProfileImage(image: UIImage(named: "PhotoProfile"))
-        presentLabels(name: "Екатерина Новикова", email: "@ekaterina_nov", status: "Hello, world!")
-        presentButton()
+        setupProfileImage(image: UIImage(named: "PhotoProfile"))
+        setupLabels(name: "Екатерина Новикова", email: "@ekaterina_nov", status: "Hello, world!")
+        setupButton()
     }
     
-    private func presentProfileImage(image: UIImage?) {
+    private func setupProfileImage(image: UIImage?) {
         guard  let image = image else { return }
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,7 @@ class ProfileViewController: UIViewController {
         self.photoProfileImageView = imageView
     }
     
-    private func presentLabels(name: String, email: String, status: String) {
+    private func setupLabels(name: String, email: String, status: String) {
         let label1 = UILabel()
         label1.text = name
         label1.textColor = UIColor(named: "YP White")
@@ -76,7 +76,7 @@ class ProfileViewController: UIViewController {
         self.statusLabel = label3
     }
     
-    private func presentButton() {
+    private func setupButton() {
         guard let imageButton = UIImage(named: "ipad.and.arrow.forward") else { return }
         let button = UIButton.systemButton(with: imageButton, target: self, action: nil)
         button.tintColor = UIColor(named: "YP Red")
