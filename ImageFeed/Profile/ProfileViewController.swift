@@ -24,14 +24,14 @@ class ProfileViewController: UIViewController {
         let label = UILabel()
         label.text = "@ekaterina_nov"
         label.textColor = UIColor(named: "YP Grey")
-        label.font = UIFont(name: "SF Pro", size: 13)
+        label.font = .systemFont(ofSize: 13, weight: .regular)
         return label
     }()
     private lazy var statusLabel: UILabel = {
         let label = UILabel()
         label.text = "Hello, world!"
         label.textColor = UIColor(named: "YP White")
-        label.font = UIFont(name: "SF Pro", size: 13)
+        label.font = .systemFont(ofSize: 13, weight: .regular)
         return label
     }()
     private lazy var logoutButton: UIButton = {

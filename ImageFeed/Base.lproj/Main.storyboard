@@ -104,15 +104,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ere-eS-PnU">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ere-eS-PnU">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="414" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="F5i-3d-wdf">
-                                        <rect key="frame" x="20" y="20" width="414" height="414"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="414" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="F5i-3d-wdf">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
                                         <color key="backgroundColor" name="TabBarBackgroundColor"/>
                                     </imageView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="F5i-3d-wdf" firstAttribute="leading" secondItem="Ere-eS-PnU" secondAttribute="leading" id="A62-vQ-UNK"/>
+                                    <constraint firstAttribute="bottom" secondItem="F5i-3d-wdf" secondAttribute="bottom" id="Nx1-g7-F5x"/>
+                                    <constraint firstAttribute="trailing" secondItem="F5i-3d-wdf" secondAttribute="trailing" id="X2d-cC-tad"/>
+                                    <constraint firstItem="F5i-3d-wdf" firstAttribute="top" secondItem="Ere-eS-PnU" secondAttribute="top" id="ggS-qy-h4Q"/>
+                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="JvP-mr-HPi"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="1SL-jY-xb9"/>
                                 <connections>
@@ -138,7 +143,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Sharing"/>
                                 <connections>
-                                    <action selector="didTapShareButton:" destination="szl-MF-dfh" eventType="touchUpInside" id="WTT-IG-XMG"/>
+                                    <action selector="didTapShareButton:" destination="szl-MF-dfh" eventType="touchUpInside" id="Fa6-JP-b6u"/>
                                 </connections>
                             </button>
                         </subviews>
