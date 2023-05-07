@@ -9,85 +9,90 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private var photoProfileImageView: UIImageView!
-    private var nameLabel: UILabel!
-    private var emailLabel: UILabel!
-    private var statusLabel: UILabel!
-    private var logoutButton: UIButton!
+    private lazy var photoProfileImageView: UIImageView = {
+        let image = UIImageView(image: UIImage(named: "PhotoProfile"))
+        return image
+    }()
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Екатерина Новикова"
+        label.textColor = UIColor(named: "YP White")
+        label.font = .systemFont(ofSize: 23, weight: .bold)
+        return label
+    }()
+    private lazy var emailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "@ekaterina_nov"
+        label.textColor = UIColor(named: "YP Grey")
+        label.font = UIFont(name: "SF Pro", size: 13)
+        return label
+    }()
+    private lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Hello, world!"
+        label.textColor = UIColor(named: "YP White")
+        label.font = UIFont(name: "SF Pro", size: 13)
+        return label
+    }()
+    private lazy var logoutButton: UIButton = {
+//        guard let imageButton = UIImage(named: "ipad.and.arrow.forward") else { return }
+        let button = UIButton(type: .system)
+        if let imageButton = UIImage(named: "ipad.and.arrow.forward") {
+            button.setImage(imageButton, for: .normal)
+        }
+        button.tintColor = UIColor(named: "YP Red")
+        return button
+    }()
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor(named: "YP Black")
-        setupProfileImage(image: UIImage(named: "PhotoProfile"))
-        setupLabels(name: "Екатерина Новикова", email: "@ekaterina_nov", status: "Hello, world!")
+        setupProfileImage()
+        setupLabels()
         setupButton()
     }
     
-    private func setupProfileImage(image: UIImage?) {
-        guard  let image = image else { return }
-        let imageView = UIImageView(image: image)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
+    private func setupProfileImage() {
+        photoProfileImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(photoProfileImageView)
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 70),
-            imageView.heightAnchor.constraint(equalToConstant: 70),
-            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
+            photoProfileImageView.widthAnchor.constraint(equalToConstant: 70),
+            photoProfileImageView.heightAnchor.constraint(equalToConstant: 70),
+            photoProfileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            photoProfileImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
-        self.photoProfileImageView = imageView
     }
     
-    private func setupLabels(name: String, email: String, status: String) {
-        let label1 = UILabel()
-        label1.text = name
-        label1.textColor = UIColor(named: "YP White")
-        label1.font = .systemFont(ofSize: 23, weight: .bold)
-        label1.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label1)
-        
-        let label2 = UILabel()
-        label2.text = email
-        label2.textColor = UIColor(named: "YP Grey")
-        label2.font = UIFont(name: "SF Pro", size: 13)
-        label2.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label2)
-        
-        let label3 = UILabel()
-        label3.text = status
-        label3.textColor = UIColor(named: "YP White")
-        label3.font = UIFont(name: "SF Pro", size: 13)
-        label3.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label3)
+    private func setupLabels() {
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(nameLabel)
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emailLabel)
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(statusLabel)
         
         NSLayoutConstraint.activate([
-            label1.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 16),
-            label1.leadingAnchor.constraint(equalTo: photoProfileImageView.leadingAnchor),
-            label1.topAnchor.constraint(equalTo: photoProfileImageView.bottomAnchor,constant: 8),
+            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 16),
+            nameLabel.leadingAnchor.constraint(equalTo: photoProfileImageView.leadingAnchor),
+            nameLabel.topAnchor.constraint(equalTo: photoProfileImageView.bottomAnchor,constant: 8),
             
-            label2.trailingAnchor.constraint(equalTo: label1.trailingAnchor),
-            label2.leadingAnchor.constraint(equalTo: label1.leadingAnchor),
-            label2.topAnchor.constraint(equalTo: label1.bottomAnchor,constant: 8),
+            emailLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
+            emailLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor,constant: 8),
             
-            label3.trailingAnchor.constraint(equalTo: label2.trailingAnchor),
-            label3.leadingAnchor.constraint(equalTo: label2.leadingAnchor),
-            label3.topAnchor.constraint(equalTo: label2.bottomAnchor,constant: 8)
+            statusLabel.trailingAnchor.constraint(equalTo: emailLabel.trailingAnchor),
+            statusLabel.leadingAnchor.constraint(equalTo: emailLabel.leadingAnchor),
+            statusLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor,constant: 8)
         ])
-        self.nameLabel = label1
-        self.emailLabel = label2
-        self.statusLabel = label3
     }
     
     private func setupButton() {
-        guard let imageButton = UIImage(named: "ipad.and.arrow.forward") else { return }
-        let button = UIButton.systemButton(with: imageButton, target: self, action: nil)
-        button.tintColor = UIColor(named: "YP Red")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(button)
+        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoutButton)
         
         NSLayoutConstraint.activate([
-            button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
-            button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55)
+            logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
+            logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55)
         ])
-        self.logoutButton = button
     }
 }
 
