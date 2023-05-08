@@ -8,7 +8,6 @@ import UIKit
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
-    let photosName: [String] = Array(0..<20).map{"\($0)"}
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -23,8 +22,8 @@ final class ImagesListCell: UITableViewCell {
 }
 
 extension ImagesListCell {
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
+    func configCell(for cell: ImagesListCell, with indexPath: IndexPath, imageNamed: UIImage?) {
+        guard let image = imageNamed else {
             return
         }
         
