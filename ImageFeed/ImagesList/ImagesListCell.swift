@@ -22,16 +22,16 @@ final class ImagesListCell: UITableViewCell {
 }
 
 extension ImagesListCell {
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath, imageNamed: UIImage?) {
+    func configCell(isLiked: IndexPath, imageNamed: UIImage?) {
         guard let image = imageNamed else {
             return
         }
         
-        cell.imageCell.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date())
+        imageCell.image = image
+        dateLabel.text = dateFormatter.string(from: Date())
         
-        let likeState = indexPath.row % 2 == 0
+        let likeState = isLiked.row % 2 == 0
         let likeImage = likeState ? UIImage(named: "LikeOffButton") : UIImage(named: "LikeOnButton")
-        cell.likeButton.setImage(likeImage, for: .normal)
+        likeButton.setImage(likeImage, for: .normal)
     }
 }
