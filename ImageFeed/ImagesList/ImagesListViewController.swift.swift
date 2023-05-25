@@ -10,7 +10,7 @@ import UIKit
 class ImagesListViewController: UIViewController {
 
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    let photosName: [String] = Array(0..<20).map{"\($0)"}
+    private let photosName: [String] = Array(0..<20).map{"\($0)"}
     
     @IBOutlet weak private var tableView: UITableView!
     
@@ -42,7 +42,7 @@ extension ImagesListViewController: UITableViewDataSource {
             print("Ошибка приведения типов")
             return UITableViewCell()
         }
-        imageListCell.configCell(for: imageListCell, with: indexPath, imageNamed: UIImage(named: photosName[indexPath.row]))
+        imageListCell.configCell(isLiked: indexPath, imageNamed: UIImage(named: photosName[indexPath.row]))
         return imageListCell
     }
 }
