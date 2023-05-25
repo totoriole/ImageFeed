@@ -16,7 +16,7 @@ final class AuthorizationViewController: UIViewController {
     weak var delegate: AuthViewControllerDelegate?
     
     private let idSegueWebView = "ShowWebView"
-    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet private weak var loginButton: UIButton!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == idSegueWebView {
