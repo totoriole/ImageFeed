@@ -20,11 +20,30 @@ final class OAuth2Service {
         }
     }
     
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
     func fetchOAuthToken(_ code: String, completion: @escaping (Swift.Result<String, Error>) -> Void) {
         guard let request = authTokenRequest(code: code) else { return }
-        let task = object(for: request) { [weak self] result in
+        
+        assert(Thread.isMainThread)
+        if task != nil {
+            if lastCode != code {
+                task?.cancel()
+            } else {
+                return
+            }
+        } else {
+            if lastCode == code {
+                return
+            }
+        }
+        lastCode = code
+        
+        task = object(for: request){ [weak self] result in
             guard let self = self else { return }
-            switch result {
+            
+            switch result  {
             case .success(let body):
                 let authToken = body.accessToken
                 self.authToken = authToken
@@ -36,7 +55,7 @@ final class OAuth2Service {
                 completion(.failure(error))
             }
         }
-        task.resume()
+        task?.resume()
     }
 }
 

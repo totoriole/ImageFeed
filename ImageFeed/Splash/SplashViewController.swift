@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class SplashViewController: UIViewController {
     private let idShowAuthorizationScene = "ShowAuthorizationScene"
@@ -49,6 +50,8 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthorizationViewController, didAuthenticateWithCode code: String) {
+        ProgressHUD.show()
+        
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
                 self.fetchOAuthToken(code)
@@ -62,8 +65,8 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 self.switchToTapBarController()
             case .failure:
-                // TODO [Sprint 11]
-                break
+                ProgressHUD.dismiss()
+                // TODO Показать ошибку
             }
         }
     }
