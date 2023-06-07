@@ -210,7 +210,7 @@
         <!--Authorization View Controller-->
         <scene sceneID="dub-ai-k6Z">
             <objects>
-                <viewController id="Avw-Yo-yLk" customClass="AuthorizationViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthViewController" id="Avw-Yo-yLk" customClass="AuthorizationViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KRi-Ud-Q4P">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
