@@ -28,7 +28,7 @@ final class WebViewViewController: UIViewController {
         delegate?.webViewViewControllerDidCancel(self)
     }
     
-    fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize" // why not static let?
+    fileprivate let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     private var estimatedProgressObservation : NSKeyValueObservation?
     
     override func viewDidLoad() {

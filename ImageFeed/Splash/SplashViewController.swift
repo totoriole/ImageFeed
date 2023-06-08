@@ -118,7 +118,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             title: "Что-то пошло не так",
             message: "Не удалось войти в систему",
             preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Ок", style: .cancel))
         self.present(alert, animated: true, completion: nil)
     }
 }

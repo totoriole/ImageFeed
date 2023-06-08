@@ -13,7 +13,7 @@ final class ProfileViewController: UIViewController {
     private var profileImageServiceObserver: NSObjectProtocol?
     private var authToken = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
-    private let profileImage = UIImage(named: "avatar")
+    private let profileImage = UIImage(named: "PhotoProfile")
     
     private lazy var photoProfileImageView: UIImageView = {
         let imageView = UIImageView(image: profileImage)
@@ -47,7 +47,9 @@ final class ProfileViewController: UIViewController {
     }()
     
     private lazy var logoutButton : UIButton = {
-        let imageButton  = UIButton.systemButton(with: UIImage(systemName: "ipad.and.arrow.forward")!, target: self, action: #selector(self.didTapLogOutButton))
+        let image = UIImage(systemName: "ipad.and.arrow.forward")
+        guard let image = image else { return }
+        let imageButton  = UIButton.systemButton(with: image, target: self, action: #selector(self.didTapLogOutButton))
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.tintColor = UIColor(named: "YP Red")
         return imageButton
