@@ -47,8 +47,11 @@ final class ProfileViewController: UIViewController {
     }()
     
     private lazy var logoutButton : UIButton = {
-        let image = UIImage(systemName: "ipad.and.arrow.forward")
-        guard let image = image else { return }
+        guard let image = UIImage(systemName: "ipad.and.arrow.forward") else {
+            assert(false, "Failed to create button image")
+            assertionFailure("Failed to create button image")
+//            fatalError("Failed to create button image")
+            }
         let imageButton  = UIButton.systemButton(with: image, target: self, action: #selector(self.didTapLogOutButton))
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.tintColor = UIColor(named: "YP Red")
