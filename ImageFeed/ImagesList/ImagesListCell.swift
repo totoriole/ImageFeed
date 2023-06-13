@@ -23,9 +23,7 @@ final class ImagesListCell: UITableViewCell {
 
 extension ImagesListCell {
     func configCell(isLiked: IndexPath, imageNamed: UIImage?) {
-        guard let image = imageNamed else {
-            return
-        }
+        guard let image = imageNamed else { return }
         
         imageCell.image = image
         dateLabel.text = dateFormatter.string(from: Date())
