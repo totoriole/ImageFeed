@@ -12,6 +12,7 @@ protocol ImageListCellDelegate : AnyObject {
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
+    weak var delegate: ImageListCellDelegate?
     
     @IBOutlet weak var imageCell: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
@@ -20,21 +21,20 @@ final class ImagesListCell: UITableViewCell {
     @IBAction private func likeButtonClicked() {
         delegate?.imageListCellDidTapLike(self)
     }
-    weak var delegate: ImageListCellDelegate?
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        // Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
-        imageCell.kf.cancelDownloadTask()
-    }
     
     func setIsLiked(isLiked: Bool){
-        let liked = UIImage(named: "like_button_on")
-        let disLiked = UIImage(named: "like_button_off")
+        let liked = UIImage(named: "LikeOnButton")
+        let disLiked = UIImage(named: "LikeOffButton")
         if isLiked {
             likeButton.setImage(liked, for: .normal)
         } else {
             likeButton.setImage(disLiked, for: .normal)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+// Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
+        imageCell.kf.cancelDownloadTask()
     }
 }
