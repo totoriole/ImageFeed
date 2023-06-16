@@ -59,6 +59,7 @@ final class ImagesListService {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     static let shared = ImagesListService()
+    private init() {}
     private let dateFormatter = ISO8601DateFormatter()
     private let oAuth2TokenStorage = OAuth2TokenStorage.shared
     
@@ -77,7 +78,7 @@ final class ImagesListService {
         assert(Thread.isMainThread)
         if task != nil {return}
         
-        let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
+        let nextPage = lastLoadedPage == nil ? 0 : lastLoadedPage! + 1
         lastLoadedPage = nextPage
         
         let request = makeRequest(path: "/photos?page=\(nextPage)&&per_page=10")

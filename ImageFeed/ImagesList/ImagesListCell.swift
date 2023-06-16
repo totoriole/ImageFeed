@@ -36,5 +36,6 @@ final class ImagesListCell: UITableViewCell {
         super.prepareForReuse()
 // Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
         imageCell.kf.cancelDownloadTask()
+        delegate = nil
     }
 }

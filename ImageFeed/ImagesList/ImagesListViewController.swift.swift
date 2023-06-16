@@ -97,7 +97,7 @@ extension ImagesListViewController: UITableViewDataSource {
         return imageListCell
     }
     
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
+    private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let imageThumbURL = URL(string: photos[indexPath.row].thumbImageURL),
               let placeholder = UIImage(named: "Stub") else {return}
         cell.imageCell.kf.indicatorType = .activity
@@ -105,11 +105,11 @@ extension ImagesListViewController: UITableViewDataSource {
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         cell.setIsLiked(isLiked: photos[indexPath.row].isLiked)
-        guard let date = photos[indexPath.row].createdAt else {
+        if let date = photos[indexPath.row].createdAt {
+            cell.dateLabel.text = dateFormatter.string(from: date)
+        } else {
             cell.dateLabel.text = nil
-            return
         }
-        cell.dateLabel.text = dateFormatter.string(from: date)
     }
 }
 

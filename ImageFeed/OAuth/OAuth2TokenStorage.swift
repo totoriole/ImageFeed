@@ -28,7 +28,7 @@ class OAuth2TokenStorage {
         }
     }
     
-    static func clean() {
+    func clean() {
        // Очищаем все куки из хранилища.
        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
        // Запрашиваем все данные из локального хранилища.
