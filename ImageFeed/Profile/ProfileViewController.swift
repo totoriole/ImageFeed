@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import WebKit
 
 final class ProfileViewController: UIViewController {
     
@@ -14,6 +15,7 @@ final class ProfileViewController: UIViewController {
     private var authToken = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImage = UIImage(named: "PhotoProfile")
+    private let webView = WebViewViewController()
     
     private lazy var photoProfileImageView: UIImageView = {
         let imageView = UIImageView(image: profileImage)
@@ -126,7 +128,7 @@ final class ProfileViewController: UIViewController {
     
     private func logOut(){
         authToken.token = nil
-        authToken.clean()
+        webView.clean()
         guard let window = UIApplication.shared.windows.first else {fatalError("Invalid Configuration")}
         window.rootViewController = SplashViewController()
         window.makeKeyAndVisible()
