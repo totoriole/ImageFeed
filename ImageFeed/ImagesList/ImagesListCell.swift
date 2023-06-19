@@ -6,30 +6,36 @@
 //
 import UIKit
 
+protocol ImageListCellDelegate : AnyObject {
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
+}
+
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    } ()
+    weak var delegate: ImageListCellDelegate?
     
     @IBOutlet weak var imageCell: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
-}
-
-extension ImagesListCell {
-    func configCell(isLiked: IndexPath, imageNamed: UIImage?) {
-        guard let image = imageNamed else { return }
-        
-        imageCell.image = image
-        dateLabel.text = dateFormatter.string(from: Date())
-        
-        let likeState = isLiked.row % 2 == 0
-        let likeImage = likeState ? UIImage(named: "LikeOffButton") : UIImage(named: "LikeOnButton")
-        likeButton.setImage(likeImage, for: .normal)
+    
+    @IBAction private func likeButtonClicked() {
+        delegate?.imageListCellDidTapLike(self)
+    }
+    
+    func setIsLiked(isLiked: Bool){
+        let liked = UIImage(named: "LikeOnButton")
+        let disLiked = UIImage(named: "LikeOffButton")
+        if isLiked {
+            likeButton.setImage(liked, for: .normal)
+        } else {
+            likeButton.setImage(disLiked, for: .normal)
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+// Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
+        imageCell.kf.cancelDownloadTask()
+        delegate = nil
     }
 }

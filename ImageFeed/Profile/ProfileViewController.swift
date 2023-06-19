@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import WebKit
 
 final class ProfileViewController: UIViewController {
     
@@ -14,6 +15,7 @@ final class ProfileViewController: UIViewController {
     private var authToken = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImage = UIImage(named: "PhotoProfile")
+    private let webView = WebViewViewController()
     
     private lazy var photoProfileImageView: UIImageView = {
         let imageView = UIImageView(image: profileImage)
@@ -124,7 +126,27 @@ final class ProfileViewController: UIViewController {
         self.statusLabel.text = profile.bio
     }
     
+    private func logOut(){
+        authToken.token = nil
+        webView.clean()
+        guard let window = UIApplication.shared.windows.first else {fatalError("Invalid Configuration")}
+        window.rootViewController = SplashViewController()
+        window.makeKeyAndVisible()
+        
+    }
+    
     @objc
     private func didTapLogOutButton() {
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            preferredStyle: .alert)
+        let action = UIAlertAction(title: "Да", style: .default, handler: {[weak self] _ in
+            guard let self = self else {return}
+            self.logOut()})
+        let cancelAction = UIAlertAction(title: "Нет", style: .cancel)
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }
