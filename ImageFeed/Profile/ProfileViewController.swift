@@ -37,18 +37,18 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     }()
     
     private lazy var nameLabel: UILabel = {
-        nameLabel.accessibilityIdentifier = "ProfileNameLabel"
         let label = UILabel()
         label.text = "Екатерина Новикова"
+        label.accessibilityIdentifier = "ProfileNameLabel"
         label.textColor = UIColor(named: "YP White")
         label.font = .systemFont(ofSize: 23, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var emailLabel: UILabel = {
-        emailLabel.accessibilityIdentifier = "ProfileLoginNameLabel"
         let label = UILabel()
         label.text = "@ekaterina_nov"
+        label.accessibilityIdentifier = "ProfileLoginNameLabel"
         label.textColor = UIColor(named: "YP Grey")
         label.font = .systemFont(ofSize: 13, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -64,14 +64,13 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     }()
     
     private lazy var logoutButton : UIButton = {
-        logoutButton.accessibilityIdentifier = "ProfileExitButton"
         guard let image = UIImage(systemName: "ipad.and.arrow.forward") else {
             assert(false, "Failed to create button image")
             assertionFailure("Failed to create button image")
             //            fatalError("Failed to create button image")
         }
         let imageButton  = UIButton.systemButton(with: image, target: self, action: #selector(self.didTapLogOutButton))
-        logoutButton.accessibilityIdentifier = "ProfileExitButton"
+        imageButton.accessibilityIdentifier = "ProfileExitButton"
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.tintColor = UIColor(named: "YP Red")
         return imageButton

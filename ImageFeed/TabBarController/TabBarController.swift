@@ -11,7 +11,7 @@ final class TabBarController: UITabBarController {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let storyBoard = UIStoryboard(name: "Main", bundle: .main)
+//        let storyBoard = UIStoryboard(name: "Main", bundle: .main)
         
         let imagesListViewController = SetupControllers.imageVC.viewController
 //        let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController")
