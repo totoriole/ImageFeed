@@ -18,12 +18,20 @@ final class AuthorizationViewController: UIViewController {
     private let idSegueWebView = "ShowWebView"
     @IBOutlet private weak var loginButton: UIButton!
 
+    override func viewDidLoad() {
+            super.viewDidLoad()
+        }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == idSegueWebView {
             guard
                 let webViewViewController = segue.destination as? WebViewViewController
             else { fatalError("Failed to prepare for \(idSegueWebView)") }
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+            webViewViewController.presenter = webViewPresenter
             webViewViewController.delegate = self
+            webViewPresenter.view = webViewViewController
         } else {
             super.prepare(for: segue, sender: sender)
         }

@@ -64,7 +64,7 @@ final class ImagesListService {
         var request = URLRequest.makeHTTPRequest(
             path: "/photos/\(photoID)/like",
             httpMethod: method,
-            baseURL: defaultBaseURL)
+            baseURL: DefaultBaseURL)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<Liked, Error>)in
@@ -87,7 +87,7 @@ final class ImagesListService {
     
     private func makeRequest(path: String) -> URLRequest {
         
-        guard let url = URL(string: path, relativeTo: defaultBaseURL) else {fatalError("Failed to create URL for ImagesList")}
+        guard let url = URL(string: path, relativeTo: DefaultBaseURL) else {fatalError("Failed to create URL for ImagesList")}
         guard let token = oAuth2TokenStorage.token else {fatalError("Failed to create Token")}
         
         var request = URLRequest(url: url)
