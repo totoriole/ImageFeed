@@ -5,6 +5,7 @@
 //  Created by Toto Tsipun on 13.04.2023.
 //
 import UIKit
+import ProgressHUD
 
 protocol ImageListCellDelegate : AnyObject {
     func imageListCellDidTapLike(_ cell: ImagesListCell)

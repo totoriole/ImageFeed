@@ -9,12 +9,22 @@ import UIKit
 import Kingfisher
 import ProgressHUD
 
-class ImagesListViewController: UIViewController {
+protocol ImagesListViewControllerProtocol: AnyObject {
+    var presenter: ImagesListPresenterProtocol? {get set}
+    
+    func didReceivePhotosForTableViewAnimatedUpdate(at indexPath: [IndexPath], new array: [Photo])
+    func isLike(indexPath: IndexPath, isOn: Bool)
+    func showLikeAlert(with: Error)
+}
+    
+final class ImagesListViewController: UIViewController & ImagesListViewControllerProtocol {
+    var presenter: ImagesListPresenterProtocol?
+    
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
 
     private var imagesListServiceObserver: NSObjectProtocol?
-    var photos: [Photo] = []
-    private let imagesListService = ImagesListService.shared
+//    var photos: [Photo] = []
+//    private let imagesListService = ImagesListService.shared
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -28,37 +38,39 @@ class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
-        UIBlockingProgressHUD.show()
-        imagesListServiceObserver = NotificationCenter.default.addObserver(
-            forName: ImagesListService.DidChangeNotification,
-            object: nil,
-            queue: .main) {[weak self] _ in
-                guard let self = self else {return}
-                self.updateTableViewAnimated()
-                UIBlockingProgressHUD.dismiss()
-            }
-        imagesListService.fetchPhotosNextPage()
+//        UIBlockingProgressHUD.show()
+//        imagesListServiceObserver = NotificationCenter.default.addObserver(
+//            forName: ImagesListService.DidChangeNotification,
+//            object: nil,
+//            queue: .main) {[weak self] _ in
+//                guard let self = self else {return}
+//                self.updateTableViewAnimated()
+//                UIBlockingProgressHUD.dismiss()
+//            }
+//        imagesListService.fetchPhotosNextPage()
+        presenter?.viewDidLoad()
     }
     
-    private func updateTableViewAnimated() {
-        let oldCount = photos.count
-        let newCount = imagesListService.photos.count
-        photos = imagesListService.photos
-        if oldCount != newCount{
-            tableView.performBatchUpdates {
-                let indexPath = (oldCount..<newCount).map { i in
-                    IndexPath(row: i, section: 0)
-                }
-                tableView.insertRows(at: indexPath, with: .automatic)
-            } completion: { _ in }
-        }
-    }
+//    private func updateTableViewAnimated() {
+//        let oldCount = photos.count
+//        let newCount = imagesListService.photos.count
+//        photos = imagesListService.photos
+//        if oldCount != newCount{
+//            tableView.performBatchUpdates {
+//                let indexPath = (oldCount..<newCount).map { i in
+//                    IndexPath(row: i, section: 0)
+//                }
+//                tableView.insertRows(at: indexPath, with: .automatic)
+//            } completion: { _ in }
+//        }
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let fullImageURL = URL(string: photos[indexPath.row].fullImageURL)
+            guard let stringURL  = presenter?.photos[indexPath.row].fullImageURL else {return}
+            let fullImageURL = URL(string: stringURL)
             viewController.fullImageURL = fullImageURL
         } else {
             super.prepare(for: segue, sender: sender)
@@ -67,13 +79,28 @@ class ImagesListViewController: UIViewController {
     
     // MARK: - Alert
     
-    private func showLikeAlert(with error: Error) {
+    internal func showLikeAlert(with error: Error) {
+        UIBlockingProgressHUD.dismiss()
         let alert = UIAlertController(
             title: "Что-то пошло не так",
             message: "Действие временно недоступно, попробуйте позднее",
             preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func isLike(indexPath: IndexPath, isOn: Bool) {
+        UIBlockingProgressHUD.dismiss()
+        guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListCell else {return}
+        cell.setIsLiked(isLiked: isOn)
+    }
+    
+    // MARK: - Protocol Methods
+    func didReceivePhotosForTableViewAnimatedUpdate(at indexPath: [IndexPath], new array: [Photo]) {
+        //        presenter?.photos = array
+        tableView.performBatchUpdates {
+            tableView.insertRows(at: indexPath, with: .automatic)
+        }
     }
 }
 
@@ -83,7 +110,7 @@ class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
+        return presenter?.photos.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -98,7 +125,7 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        guard let imageThumbURL = URL(string: photos[indexPath.row].thumbImageURL),
+        guard let photos = presenter?.photos, let imageThumbURL = URL(string: photos[indexPath.row].thumbImageURL),
               let placeholder = UIImage(named: "Stub") else {return}
         cell.imageCell.kf.indicatorType = .activity
         cell.imageCell.kf.setImage(with: imageThumbURL, placeholder: placeholder) { _ in
@@ -119,13 +146,11 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == imagesListService.photos.count {
-            imagesListService.fetchPhotosNextPage()
-        }
+        presenter?.updateNextPageIfNeeded(forRowAt: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let image = photos[indexPath.row]
+        guard let image = presenter?.photos[indexPath.row] else { return 0 }
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let imageWidth = image.size.width
@@ -139,25 +164,8 @@ extension ImagesListViewController: UITableViewDelegate {
 extension ImagesListViewController: ImageListCellDelegate {
     
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else {return}
-        let photo = photos[indexPath.row]
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
         UIBlockingProgressHUD.show() //// Покажем лоадер
-        imagesListService.changeLikes(photoID: photo.id, isLike: !photo.isLiked) { [weak self]  result in
-            guard let self = self else {return}
-            switch result {
-            case .success:
-                // Синхронизируем массив картинок с сервисом
-                self.photos = self.imagesListService.photos
-                // Изменим индикацию лайка картинки
-                cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
-                // Уберём лоадер
-                UIBlockingProgressHUD.dismiss()
-            case .failure(let error):
-                // Уберём лоадер
-                UIBlockingProgressHUD.dismiss()
-                // Покажем, что что-то пошло не так
-                self.showLikeAlert(with: error)
-            }
-        }
+        presenter?.selectLike(indexPath: indexPath)
     }
 }
