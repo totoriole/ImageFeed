@@ -68,6 +68,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="YP Black"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="likeButton"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="likeButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="dateLabel" destination="MR6-rF-oVx" id="hXX-2o-WdH"/>
                                             <outlet property="imageCell" destination="fnK-4D-6in" id="Jp2-Dn-BDt"/>
@@ -130,6 +134,7 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="thu-Qe-Pu2" userLabel="BackwardButton">
                                 <rect key="frame" x="8" y="67" width="48" height="48"/>
+                                <accessibility key="accessibilityConfiguration" identifier="SingleImageBackButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Waq-BF-BU9"/>
                                     <constraint firstAttribute="width" constant="48" id="Znt-hK-Kxx"/>
@@ -138,6 +143,9 @@
                                 <state key="normal" image="backwardButton">
                                     <color key="titleColor" name="YP White"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="SingleImageBackButton"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didTapBackButton" destination="szl-MF-dfh" eventType="touchUpInside" id="h8r-PB-Wi5"/>
                                 </connections>
@@ -223,9 +231,10 @@
                                     <constraint firstAttribute="height" constant="60" id="yyg-Hr-1hQ"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kA-j2-cok" userLabel="loginButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kA-j2-cok">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="KxJ-34-4gv"/>
                                 </constraints>
@@ -239,6 +248,7 @@
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Authenticate"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="YiY-wZ-t3y" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" modalTransitionStyle="coverVertical" id="HfO-ln-wzU"/>
