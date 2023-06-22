@@ -16,22 +16,22 @@ protocol ImagesListPresenterProtocol {
 }
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
-
+    
     weak var view: ImagesListViewControllerProtocol?
     var imagesListServiceObserver: NSObjectProtocol?
     private var imagesListService = ImagesListService.shared
     private(set) var photos: [Photo] = []
-
+    
     init(view: ImagesListViewControllerProtocol) {
         self.view = view
     }
-
+    
     func viewDidLoad(){
         UIBlockingProgressHUD.show()
         setNotificationObserver()
         imagesListService.fetchPhotosNextPage()
     }
-
+    
     func setNotificationObserver() {
         imagesListServiceObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.DidChangeNotification,
@@ -42,13 +42,13 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
                 UIBlockingProgressHUD.dismiss()
             }
     }
-
+    
     func updateNextPageIfNeeded(forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == imagesListService.photos.count {
             imagesListService.fetchPhotosNextPage()
         }
     }
-
+    
     func selectLike(indexPath: IndexPath) {
         let row = indexPath.row
         let photo = photos[row]
@@ -66,7 +66,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
             }
         }
     }
-
+    
     private func updateTableViewAnimated() {
         let oldCount = photos.count
         let newCount = imagesListService.photos.count
@@ -76,12 +76,10 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
             view?.didReceivePhotosForTableViewAnimatedUpdate(at: indexPath, new: imagesListService.photos)
         }
     }
-
+    
     private func createIndexPaths(from oldCount: Int, to newCount: Int) -> [IndexPath] {
         return (oldCount..<newCount).map { i in
             IndexPath(row: i, section: 0)
         }
     }
-
-
 }

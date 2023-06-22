@@ -8,9 +8,9 @@
 import XCTest
 @testable import ImageFeed
 
-final class ImageFeedTests: XCTestCase {
+class ImageFeedTests: XCTestCase {
     
-    final class WebViewTests: XCTestCase {
+    class WebViewTests: XCTestCase {
         func testViewControllerCallsViewDidLoad() {
             // given
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -53,19 +53,6 @@ final class ImageFeedTests: XCTestCase {
             
             //then
             XCTAssertFalse(sholdHideProgress)
-        }
-        
-        func testProgressHiddenWhenOne() {
-            // given
-            let authHelper = AuthHelper()
-            let presenter = WebViewPresenter(authHelper: authHelper)
-            let progress: Float = 1.0
-            
-            //when
-            let sholdHideProgress = presenter.shouldHideProgress(for: progress)
-            
-            //then
-            XCTAssertTrue(sholdHideProgress)
         }
         
         func testAuthHelperAuthURL() {

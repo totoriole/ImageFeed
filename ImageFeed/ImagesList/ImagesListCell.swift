@@ -24,18 +24,13 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(isLiked: Bool){
-        let liked = UIImage(named: "LikeOnButton")
-        let disLiked = UIImage(named: "LikeOffButton")
-        if isLiked {
-            likeButton.setImage(liked, for: .normal)
-        } else {
-            likeButton.setImage(disLiked, for: .normal)
-        }
+        
+        likeButton.setImage(UIImage(named: isLiked ? "LikeOnButton" : "LikeOffButton"), for: .normal)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-// Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
+        // Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
         imageCell.kf.cancelDownloadTask()
         delegate = nil
     }

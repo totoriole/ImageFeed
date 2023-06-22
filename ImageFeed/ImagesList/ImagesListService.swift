@@ -10,7 +10,7 @@ import UIKit
 
 final class ImagesListService {
     
-    private (set) var photos: [Photo] = []
+    var photos: [Photo] = []
     private var lastLoadedPage: Int?
     static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     private let urlSession = URLSession.shared
@@ -38,7 +38,7 @@ final class ImagesListService {
         let nextPage = lastLoadedPage == nil ? 0 : lastLoadedPage! + 1
         lastLoadedPage = nextPage
         
-        let request = makeRequest(path: "/photos?page=\(nextPage)&&per_page=10")
+        let request = makeRequest(path: "/photos?page=\(nextPage)&&per_page=5")
         let task = urlSession.objectTask(for: request) {[weak self] (result: Result<[PhotoResult], Error>) in
             guard let self = self else {return}
             switch result {

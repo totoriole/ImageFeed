@@ -28,7 +28,6 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     private var authToken = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImage = UIImage(named: "PhotoProfile")
-    //    private let webView = WebViewViewController()
     
     private lazy var photoProfileImageView: UIImageView = {
         let imageView = UIImageView(image: profileImage)
@@ -78,17 +77,6 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        configureViews()
-        //        configureConstraints()
-        //        updateProfileDetails(profile: profileService.profile)
-        //
-        //        profileImageServiceObserver = NotificationCenter.default.addObserver(
-        //            forName: ProfileImageService.DidChangeNotification,
-        //            object: nil,
-        //            queue: .main) { [weak self] _ in
-        //                guard let self = self else { return }
-        //                self.updateAvatar()
-        //    }
         view.backgroundColor = .ypBlack
         presenter?.viewDidLoad()
     }
@@ -141,15 +129,6 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         self.emailLabel.text = profile.loginName
         self.statusLabel.text = profile.bio
     }
-    
-    //    private func logOut(){
-    //        authToken.token = nil
-    //        webView.clean()
-    //        guard let window = UIApplication.shared.windows.first else {fatalError("Invalid Configuration")}
-    //        window.rootViewController = SplashViewController()
-    //        window.makeKeyAndVisible()
-    //
-    //    }
     
     @objc
     internal func didTapLogOutButton() {

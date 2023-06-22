@@ -16,15 +16,14 @@ protocol ImagesListViewControllerProtocol: AnyObject {
     func isLike(indexPath: IndexPath, isOn: Bool)
     func showLikeAlert(with: Error)
 }
-    
+
 final class ImagesListViewController: UIViewController & ImagesListViewControllerProtocol {
     var presenter: ImagesListPresenterProtocol?
     
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-
+    
     private var imagesListServiceObserver: NSObjectProtocol?
-//    var photos: [Photo] = []
-//    private let imagesListService = ImagesListService.shared
+    
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -38,32 +37,8 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
-//        UIBlockingProgressHUD.show()
-//        imagesListServiceObserver = NotificationCenter.default.addObserver(
-//            forName: ImagesListService.DidChangeNotification,
-//            object: nil,
-//            queue: .main) {[weak self] _ in
-//                guard let self = self else {return}
-//                self.updateTableViewAnimated()
-//                UIBlockingProgressHUD.dismiss()
-//            }
-//        imagesListService.fetchPhotosNextPage()
         presenter?.viewDidLoad()
     }
-    
-//    private func updateTableViewAnimated() {
-//        let oldCount = photos.count
-//        let newCount = imagesListService.photos.count
-//        photos = imagesListService.photos
-//        if oldCount != newCount{
-//            tableView.performBatchUpdates {
-//                let indexPath = (oldCount..<newCount).map { i in
-//                    IndexPath(row: i, section: 0)
-//                }
-//                tableView.insertRows(at: indexPath, with: .automatic)
-//            } completion: { _ in }
-//        }
-//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
@@ -109,6 +84,7 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
 //MARK: - Extensions
 
 extension ImagesListViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter?.photos.count ?? 0
     }

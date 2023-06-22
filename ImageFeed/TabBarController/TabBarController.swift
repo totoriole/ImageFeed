@@ -11,11 +11,10 @@ final class TabBarController: UITabBarController {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        let storyBoard = UIStoryboard(name: "Main", bundle: .main)
         
         let imagesListViewController = SetupControllers.imageVC.viewController
-//        let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController")
         let profileViewController = SetupControllers.profile.viewController
+        
         profileViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "tab_profile_active"), selectedImage: nil)
         imagesListViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "tab_editorial_active"), selectedImage: nil)
         
@@ -26,7 +25,7 @@ final class TabBarController: UITabBarController {
 enum SetupControllers {
     case profile
     case imageVC
-
+    
     var viewController: UIViewController {
         switch self {
         case .profile:
