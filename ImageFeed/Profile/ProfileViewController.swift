@@ -90,7 +90,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         let processor = RoundCornerImageProcessor(cornerRadius: 35)
         photoProfileImageView.kf.indicatorType = .activity
         photoProfileImageView.kf.setImage(with: url,
-                                          placeholder: UIImage(named: "placeholder.jpeg"),
+                                          placeholder: UIImage(named: "placeholder"),
                                           options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
         let cache = ImageCache.default
         cache.clearDiskCache()
