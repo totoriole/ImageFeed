@@ -38,11 +38,16 @@
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbS-3h-N6G" userLabel="LikeOnButton">
-                                                    <rect key="frame" x="337" y="17" width="29" height="26"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbS-3h-N6G" userLabel="likeButton">
+                                                    <rect key="frame" x="336" y="17" width="30" height="26"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="likeButton"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" image="LikeOnButton"/>
+                                                    <state key="normal" image="LikeOffButton"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="identifier" value="likeButton"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="likeButton"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="likeButtonClicked" destination="QJf-fh-4TV" eventType="touchUpInside" id="Qri-DP-lcv"/>
                                                     </connections>
@@ -130,6 +135,7 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="thu-Qe-Pu2" userLabel="BackwardButton">
                                 <rect key="frame" x="8" y="67" width="48" height="48"/>
+                                <accessibility key="accessibilityConfiguration" identifier="SingleImageBackButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Waq-BF-BU9"/>
                                     <constraint firstAttribute="width" constant="48" id="Znt-hK-Kxx"/>
@@ -138,6 +144,9 @@
                                 <state key="normal" image="backwardButton">
                                     <color key="titleColor" name="YP White"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="SingleImageBackButton"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didTapBackButton" destination="szl-MF-dfh" eventType="touchUpInside" id="h8r-PB-Wi5"/>
                                 </connections>
@@ -223,9 +232,10 @@
                                     <constraint firstAttribute="height" constant="60" id="yyg-Hr-1hQ"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kA-j2-cok" userLabel="loginButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kA-j2-cok">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="KxJ-34-4gv"/>
                                 </constraints>
@@ -239,6 +249,8 @@
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Authenticate"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="identifier" value="Authenticate"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="YiY-wZ-t3y" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" modalTransitionStyle="coverVertical" id="HfO-ln-wzU"/>
@@ -267,7 +279,7 @@
         <!--Web View View Controller-->
         <scene sceneID="v92-Lh-zXp">
             <objects>
-                <viewController id="YiY-wZ-t3y" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" id="YiY-wZ-t3y" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4nr-ju-gOm">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -342,7 +354,7 @@
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="AuthorizationImage" width="60" height="60"/>
-        <image name="LikeOnButton" width="29.333333969116211" height="26"/>
+        <image name="LikeOffButton" width="29.333333969116211" height="26"/>
         <image name="Sharing" width="50.333332061767578" height="50"/>
         <image name="backwardButton" width="9" height="15.666666984558105"/>
         <image name="nav_back_button" width="24" height="24"/>

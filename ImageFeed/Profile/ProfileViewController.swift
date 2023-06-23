@@ -9,13 +9,25 @@ import UIKit
 import Kingfisher
 import WebKit
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? {get set}
     
+    func updateAvatar()
+    func didTapLogOutButton()
+    func alert(title: String, message: String, action: ((UIAlertAction) -> ())?)
+    func configureViews()
+    func configureConstraints()
+    func updateProfileDetails(profile: Profile?)
+    func updateRootViewControler()
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
+    
+    var presenter: ProfilePresenterProtocol?
     private var profileImageServiceObserver: NSObjectProtocol?
     private var authToken = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImage = UIImage(named: "PhotoProfile")
-    private let webView = WebViewViewController()
     
     private lazy var photoProfileImageView: UIImageView = {
         let imageView = UIImageView(image: profileImage)
@@ -26,6 +38,7 @@ final class ProfileViewController: UIViewController {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Екатерина Новикова"
+        label.accessibilityIdentifier = "ProfileNameLabel"
         label.textColor = UIColor(named: "YP White")
         label.font = .systemFont(ofSize: 23, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +47,7 @@ final class ProfileViewController: UIViewController {
     private lazy var emailLabel: UILabel = {
         let label = UILabel()
         label.text = "@ekaterina_nov"
+        label.accessibilityIdentifier = "ProfileLoginNameLabel"
         label.textColor = UIColor(named: "YP Grey")
         label.font = .systemFont(ofSize: 13, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -52,9 +66,10 @@ final class ProfileViewController: UIViewController {
         guard let image = UIImage(systemName: "ipad.and.arrow.forward") else {
             assert(false, "Failed to create button image")
             assertionFailure("Failed to create button image")
-//            fatalError("Failed to create button image")
-            }
+            //            fatalError("Failed to create button image")
+        }
         let imageButton  = UIButton.systemButton(with: image, target: self, action: #selector(self.didTapLogOutButton))
+        imageButton.accessibilityIdentifier = "ProfileExitButton"
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.tintColor = UIColor(named: "YP Red")
         return imageButton
@@ -62,39 +77,28 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViews()
-        configureConstraints()
-        updateProfileDetails(profile: profileService.profile)
-        
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.DidChangeNotification,
-            object: nil,
-            queue: .main) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
         view.backgroundColor = .ypBlack
-        updateAvatar()
+        presenter?.viewDidLoad()
     }
     
     // MARK: - Functions
     
-    private func updateAvatar() {
+    internal func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL) else { return }
         let processor = RoundCornerImageProcessor(cornerRadius: 35)
         photoProfileImageView.kf.indicatorType = .activity
         photoProfileImageView.kf.setImage(with: url,
-                                    placeholder: UIImage(named: "placeholder.jpeg"),
-                                    options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
+                                          placeholder: UIImage(named: "placeholder"),
+                                          options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
         let cache = ImageCache.default
         cache.clearDiskCache()
         cache.clearMemoryCache()
         
     }
     
-    private func configureViews() {
+    internal func configureViews() {
         view.addSubview(photoProfileImageView)
         view.addSubview(nameLabel)
         view.addSubview(emailLabel)
@@ -102,7 +106,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(logoutButton)
     }
     
-    private func configureConstraints() {
+    internal func configureConstraints() {
         NSLayoutConstraint.activate([
             photoProfileImageView.widthAnchor.constraint(equalToConstant: 70),
             photoProfileImageView.heightAnchor.constraint(equalToConstant: 70),
@@ -119,34 +123,36 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    private func updateProfileDetails(profile: Profile?) {
+    internal func updateProfileDetails(profile: Profile?) {
         guard let profile = profile else {return}
         self.nameLabel.text = profile.name
         self.emailLabel.text = profile.loginName
         self.statusLabel.text = profile.bio
     }
     
-    private func logOut(){
-        authToken.token = nil
-        webView.clean()
-        guard let window = UIApplication.shared.windows.first else {fatalError("Invalid Configuration")}
-        window.rootViewController = SplashViewController()
-        window.makeKeyAndVisible()
-        
+    @objc
+    internal func didTapLogOutButton() {
+        presenter?.logOut()
     }
     
-    @objc
-    private func didTapLogOutButton() {
+    func alert(title: String, message: String, action: ((UIAlertAction) -> ())?) {
         let alert = UIAlertController(
-            title: "Пока, пока!",
-            message: "Уверены что хотите выйти?",
+            title: title,
+            message: message,
             preferredStyle: .alert)
-        let action = UIAlertAction(title: "Да", style: .default, handler: {[weak self] _ in
-            guard let self = self else {return}
-            self.logOut()})
+        let action = UIAlertAction(title: "Да", style: .default, handler: action)
         let cancelAction = UIAlertAction(title: "Нет", style: .cancel)
         alert.addAction(action)
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+//MARK: - Delegate Presenter
+extension ProfileViewController {
+    func updateRootViewControler() {
+        guard let window = UIApplication.shared.windows.first else {fatalError("Invalid Configuration")}
+        window.rootViewController = SplashViewController()
+        window.makeKeyAndVisible()
     }
 }

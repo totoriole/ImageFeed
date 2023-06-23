@@ -65,7 +65,7 @@ extension ProfileImageService {
     private func makeRequest(username: String) -> URLRequest {
         var urlComponents = URLComponents()
         urlComponents.path = "/users/\(username)"
-        guard let url = urlComponents.url(relativeTo: defaultBaseURL) else {fatalError("Failed to create URL for avatar Image") }
+        guard let url = urlComponents.url(relativeTo: DefaultBaseURL) else {fatalError("Failed to create URL for avatar Image") }
         guard let token = OAuth2TokenStorage().token else {fatalError("Failed to create Token")}
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
